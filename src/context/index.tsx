@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
+import Loader from '../components/loader';
 import { IMovie } from '../hooks/useMovies/types';
 import { IProviderProps } from './types';
 
@@ -53,6 +54,7 @@ const AppContextProvider = ({ children }: IProviderProps) => {
       }}
     >
       {children}
+      <Loader />
     </AppContext.Provider>
   );
 };
