@@ -39,8 +39,7 @@ function NavBar({ options: { title } }: INavBarProps): JSX.Element {
       ) : (
         <StyledNavBarTitle>{title}</StyledNavBarTitle>
       )}
-
-      <StyledSearchAction onPress={() => toggleSearch()}>
+      <StyledSearchAction onPress={() => toggleSearch()} testID="search-button">
         <StyledSearchActionIcon
           source={
             assets[

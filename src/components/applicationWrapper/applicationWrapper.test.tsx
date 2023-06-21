@@ -1,8 +1,24 @@
-import { render } from '@testing-library/react-native';
 import React from 'react';
 import ApplicationWrapper from '.';
+import useTestComponentWithTheme from '../../hooks/useTestComponentWithTheme';
 
-test('does component render', () => {
-  const tree = render(<ApplicationWrapper />);
-  tree;
+describe('Application wrapper', () => {
+  const componentWithTheme = useTestComponentWithTheme();
+
+  it('should render with padding', () => {
+    const tree = componentWithTheme(
+      <ApplicationWrapper hasPadding>
+        <></>
+      </ApplicationWrapper>,
+    );
+    tree;
+  });
+  it('should render without padding', () => {
+    const tree = componentWithTheme(
+      <ApplicationWrapper hasPadding={false}>
+        <></>
+      </ApplicationWrapper>,
+    );
+    tree;
+  });
 });

@@ -19,6 +19,7 @@ function TextField({
   } = useTheme();
   return (
     <StyledTextField
+      testID="search-field"
       onChangeText={onChangeText}
       placeholder={placeholder}
       placeholderTextColor={white80}
