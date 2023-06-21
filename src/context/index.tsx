@@ -1,38 +1,51 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useCallback, useState } from 'react';
 import Loader from '../components/loader';
 import { IMovie } from '../hooks/useMovies/types';
-import { IProviderProps } from './types';
+import { debounce } from '../utils';
+import { IApiContextState, IProviderProps, IUiContextState } from './types';
 
-const AppContext = createContext<{
-  isLoading: boolean;
-  toggleLoader: () => void;
-  movies: IMovie[];
-  updateMovies: (movies: IMovie[]) => void;
-  findMoviesByTitle: (searchTerm: string) => void;
+export const AppContext = createContext<{
+  ui: IUiContextState;
+  api: IApiContextState;
 }>({
-  movies: [],
-  isLoading: false,
-  updateMovies: () => false,
-  toggleLoader: () => false,
-  findMoviesByTitle: () => false,
+  api: {
+    movies: [],
+    updateMovies: () => false,
+    findMoviesByTitle: () => false,
+  },
+  ui: {
+    isSearchActive: false,
+    toggleSearch: () => false,
+    isLoading: false,
+    toggleLoader: () => false,
+  },
 });
-
-export const useAppContext = () => useContext(AppContext);
 
 const AppContextProvider = ({ children }: IProviderProps) => {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [filteredMovies, setFilteredMovies] = useState<IMovie[]>([]);
   const [shouldShowLoader, setShouldShowLoader] = useState<boolean>(false);
+  const [isSearchActive, setIsSearchActive] = useState<boolean>(false);
 
-  const updateMovies = useCallback((newMovies: IMovie[]) => {
-    setFilteredMovies(newMovies);
-    setMovies(newMovies);
+  const updateMovies = useCallback(
+    (newMovies: IMovie[]) => {
+      setFilteredMovies(newMovies);
+      setMovies(newMovies);
+    },
+
+    [],
+  );
+
+  const toggleLoader = useCallback(
+    () => setShouldShowLoader((prevVal) => !prevVal),
+    [],
+  );
+  const toggleSearch = useCallback(() => {
+    setIsSearchActive((prevVal) => !prevVal);
   }, []);
 
-  const toggleLoader = () => setShouldShowLoader((prevVal) => !prevVal);
-
-  const findMoviesByTitle = (searchTerm: string) => {
-    if (!searchTerm) {
+  const findMoviesByTitle = debounce((searchTerm: string) => {
+    if (searchTerm.length === 0) {
       return setFilteredMovies(movies);
     }
 
@@ -41,16 +54,22 @@ const AppContextProvider = ({ children }: IProviderProps) => {
     );
 
     setFilteredMovies(movieResults);
-  };
+  }, 300);
 
   return (
     <AppContext.Provider
       value={{
-        movies: filteredMovies,
-        updateMovies,
-        findMoviesByTitle,
-        toggleLoader,
-        isLoading: shouldShowLoader,
+        api: {
+          movies: filteredMovies,
+          updateMovies,
+          findMoviesByTitle,
+        },
+        ui: {
+          toggleLoader,
+          isLoading: shouldShowLoader,
+          toggleSearch,
+          isSearchActive,
+        },
       }}
     >
       {children}

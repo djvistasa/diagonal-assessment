@@ -8,6 +8,7 @@ import poster6 from './poster6.jpg';
 import poster7 from './poster7.jpg';
 import poster8 from './poster8.jpg';
 import poster9 from './poster9.jpg';
+import posterthatismissing from './posterthatismissing.png';
 import search from './search.png';
 
 export {
@@ -21,5 +22,6 @@ export {
   poster7,
   poster8,
   poster9,
+  posterthatismissing,
   search,
 };

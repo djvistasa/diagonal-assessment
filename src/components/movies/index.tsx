@@ -4,18 +4,26 @@
  *
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
+import { useAppContext } from '../../context/useAppContext';
 import Movie from '../movie';
 import { StyledMovies } from './styles';
 import { IMoviesProps } from './types';
 import { removeImageExtension } from './utils';
 
-function Movies({ movies, onScrollEnd }: IMoviesProps): JSX.Element {
+function Movies({ onScrollEnd }: IMoviesProps): JSX.Element {
+  const {
+    api: { movies },
+    ui: { isSearchActive },
+  } = useAppContext();
+
+  useEffect(() => {}, [movies]);
   return (
     <StyledMovies>
       <FlatList
         data={movies}
+        testID="movies-list"
         numColumns={3}
         contentContainerStyle={{
           rowGap: 20,
@@ -29,7 +37,7 @@ function Movies({ movies, onScrollEnd }: IMoviesProps): JSX.Element {
           />
         )}
         keyExtractor={(item) => item.id.toString()}
-        onEndReached={() => onScrollEnd()}
+        onEndReached={() => !isSearchActive && onScrollEnd()}
         onEndReachedThreshold={0.5}
       />
     </StyledMovies>

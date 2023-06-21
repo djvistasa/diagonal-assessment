@@ -13,7 +13,7 @@ import { IMovieProps } from './types';
 
 function Movie({ name, image }: IMovieProps): JSX.Element {
   return (
-    <StyledMovie>
+    <StyledMovie testID={name.toLowerCase()}>
       <StyledMovieImage
         source={movieImages[image as keyof typeof movieImages]}
         PlaceholderContent={<ActivityIndicator />}

@@ -1,8 +1,20 @@
-import { render } from '@testing-library/react-native';
 import React from 'react';
 import TextField from '.';
+import useTestComponentWithTheme from '../../hooks/useTestComponentWithTheme';
 
-test('does component render', () => {
-  const tree = render(<TextField />);
-  tree;
+const mockOnChangeText = jest.fn();
+describe('Text Field', () => {
+  const componentMountedWithTheme = useTestComponentWithTheme();
+
+  const component = componentMountedWithTheme(
+    <TextField
+      autoFocus={false}
+      onChangeText={mockOnChangeText}
+      placeholder="Test"
+    />,
+  );
+
+  it('should render correctly', () => {
+    expect(component).toBeTruthy();
+  });
 });

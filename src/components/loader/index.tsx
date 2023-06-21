@@ -6,12 +6,14 @@
 
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
-import { useAppContext } from '../../context';
+import { useAppContext } from '../../context/useAppContext';
 import { StyledLoader } from './styles';
 import { ILoaderProps } from './types';
 
 function Loader(_props: ILoaderProps): JSX.Element | null {
-  const { isLoading } = useAppContext();
+  const {
+    ui: { isLoading },
+  } = useAppContext();
 
   return isLoading ? (
     <StyledLoader>

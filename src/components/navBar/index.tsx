@@ -4,9 +4,9 @@
  *
  */
 
-import React, { useState } from 'react';
+import React from 'react';
 import * as assets from '../../assets/images';
-import { useAppContext } from '../../context';
+import { useAppContext } from '../../context/useAppContext';
 import TextField from '../textField';
 import {
   StyledNavBar,
@@ -18,13 +18,17 @@ import {
 import { INavBarProps } from './types';
 
 function NavBar({ options: { title } }: INavBarProps): JSX.Element {
-  const { findMoviesByTitle } = useAppContext();
-
-  const [isSearchActive, setIsSearchActive] = useState(false);
+  const {
+    api: { findMoviesByTitle },
+    ui: { isSearchActive, toggleSearch },
+  } = useAppContext();
 
   const handleSearch = (text: string) => findMoviesByTitle(text);
 
-  const toggleSearch = () => setIsSearchActive(!isSearchActive);
+  const handleSearchAction = () => {
+    findMoviesByTitle('');
+    toggleSearch();
+  };
 
   return (
     <StyledNavBar>
@@ -39,7 +43,10 @@ function NavBar({ options: { title } }: INavBarProps): JSX.Element {
       ) : (
         <StyledNavBarTitle>{title}</StyledNavBarTitle>
       )}
-      <StyledSearchAction onPress={() => toggleSearch()} testID="search-button">
+      <StyledSearchAction
+        onPress={() => handleSearchAction()}
+        testID="search-button"
+      >
         <StyledSearchActionIcon
           source={
             assets[

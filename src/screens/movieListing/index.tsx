@@ -6,13 +6,11 @@
 import React, { useEffect, useState } from 'react';
 import ApplicationWrapper from '../../components/applicationWrapper';
 import Movies from '../../components/movies';
-import { useAppContext } from '../../context';
 import useMovies from '../../hooks/useMovies';
 
 function MovieListing(): JSX.Element {
   const { getMoviesPage } = useMovies();
   const [activePage, setActivePage] = useState(1);
-  const { movies } = useAppContext();
 
   const getNextPage = () => {
     setActivePage(activePage + 1);
@@ -20,11 +18,12 @@ function MovieListing(): JSX.Element {
 
   useEffect(() => {
     getMoviesPage(activePage);
-  }, [activePage, getMoviesPage]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activePage]);
 
   return (
     <ApplicationWrapper hasPadding>
-      <Movies movies={movies} onScrollEnd={getNextPage} />
+      <Movies onScrollEnd={getNextPage} />
     </ApplicationWrapper>
   );
 }
