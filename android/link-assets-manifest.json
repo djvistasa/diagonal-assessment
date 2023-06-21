@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "src/assets/fonts/TitilliumWeb-Bold.ttf",
+      "sha1": "338a89991f9244d6392b647be9632e97fc285eb7"
+    },
+    {
+      "path": "src/assets/fonts/TitilliumWeb-Light.ttf",
+      "sha1": "51ec3675bb54e357ab24eb88b53d596035d1eccd"
+    },
+    {
+      "path": "src/assets/fonts/TitilliumWeb-Regular.ttf",
+      "sha1": "d865b839ba95b93d11458f1ac530013965dd52ac"
+    },
+    {
+      "path": "src/assets/fonts/TitilliumWeb-SemiBold.ttf",
+      "sha1": "8fd5236a662501794f49e1b880338cc16cd7f5e9"
+    }
+  ]
+}
